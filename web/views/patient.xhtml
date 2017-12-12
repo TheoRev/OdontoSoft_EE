@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../templates/template.xhtml">
+
+
+            <ui:define name="content">
+                <h:form id="frmPatientResult">
+                    <p:growl id="msgPatient" showDetail="true" />
+
+                    <p:panel id="pnlPatientresult">
+                        <p:dataTable id="tblPatients"
+                                     stickyHeader="true"
+                                     rows="10" paginator="true"
+                                     value="#{patientsController.pacientes}" var="p"
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+                                     style="font-size: 10pt;">
+                            <f:facet name="header">
+                                <p:outputLabel style="font-size: 14pt;">LISTA DE PACIENTES</p:outputLabel>
+                                <p:commandButton value="AGREGAR"
+                                                 style="float: right; font-size: 10pt;" icon="fa fa-plus" />
+                                <p:commandButton id="toggler" type="button" value="Columnas" style="float:left;" icon="ui-icon-calculator" />
+                                <p:columnToggler datasource="tblPatients" trigger="toggler" />
+                            </f:facet>
+
+                            <p:column headerText="ID" class="patients-small-column">
+                                <h:outputText value="#{p.id}" />
+                            </p:column>
+                            <p:column headerText="Fec. Ingr." class="patients-medium-column">
+                                <h:outputText value="#{p.dateInit}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Nombres y Ape." class="patients-hight-column">
+                                <h:outputText value="#{p.nomApe}" />
+                            </p:column>
+                            <p:column headerText="Dirección" class="patients-hight-column">
+                                <h:outputText value="#{p.address}" />
+                            </p:column>
+                            <p:column headerText="Telef. / Cel.">
+                                <h:outputText value="#{p.telCel}" />
+                            </p:column>
+                            <p:column headerText="Edad" class="patients-small-column">
+                                <h:outputText value="#{p.age}" />
+                            </p:column>
+                            <p:column headerText="Sexo" class="patients-small-column">
+                                <h:outputText value="#{p.sex}" />
+                            </p:column>
+                            <p:column headerText="Fec. Nac." class="patients-medium-column">
+                                <h:outputText value="#{p.dateNac}" >
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Diabts." class="patients-small-column">
+                                <i class="#{p.diabettes? 'fa fa-check':'fa fa-times'}" aria-hidden="true"></i>
+                            </p:column>
+                            <p:column headerText="Hiper." class="patients-small-column">
+                                <i class="#{p.hipertension? 'fa fa-check':'fa fa-times'}" aria-hidden="true"></i>
+                            </p:column>
+                            <p:column>
+                                <div class="action-buttons">
+                                    <p:commandButton icon="fa fa-pencil"/>
+                                    &nbsp;
+                                    <p:commandButton icon="fa fa-trash"/>
+                                </div>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+                
+                <h:form id="frmPatient">
+                    <p:dialog header="#{patientsController.accion} PACIENTE"
+                              closable="true"
+                              widgetVar="dlgPatientCU"
+                              modal="true"
+                              id="idDlgPatientCU">
+                        <p:panelGrid columns="2" id="pgPatientCU">
+                            <p:outputLabel value="ID"/>
+                            <p:inputText id="id" disabled="true" value="#{patientsController.paciente.id}"/>
+                            <p:outputLabel value="Fecha"/>
+                            <p:da
+                        </p:panelGrid>
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
