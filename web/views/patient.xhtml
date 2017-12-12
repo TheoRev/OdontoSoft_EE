@@ -26,7 +26,10 @@
                             <f:facet name="header">
                                 <p:outputLabel style="font-size: 14pt;">LISTA DE PACIENTES</p:outputLabel>
                                 <p:commandButton value="AGREGAR"
-                                                 style="float: right; font-size: 10pt;" icon="fa fa-plus" />
+                                                 style="float: right; font-size: 10pt;" icon="fa fa-plus"
+                                                 update=":frmPatientCU:idDlgPatientCU"
+                                                 oncomplete="PF('dlgPatientCU').show()"
+                                                 action="#{patientsController.doNew()}"/>
                                 <p:commandButton id="toggler" type="button" value="Columnas" style="float:left;" icon="ui-icon-calculator" />
                                 <p:columnToggler datasource="tblPatients" trigger="toggler" />
                             </f:facet>
@@ -67,7 +70,10 @@
                             </p:column>
                             <p:column>
                                 <div class="action-buttons">
-                                    <p:commandButton icon="fa fa-pencil"/>
+                                    <p:commandButton icon="fa fa-pencil"
+                                                     update=":frmPatientCU:idDlgPatientCU"
+                                                     oncomplete="PF('dlgPatientCU').show()"
+                                                     action="#{patientsController.doModify(p)}"/>
                                     &nbsp;
                                     <p:commandButton icon="fa fa-trash"/>
                                 </div>
@@ -75,18 +81,21 @@
                         </p:dataTable>
                     </p:panel>
                 </h:form>
-                
-                <h:form id="frmPatient">
+
+                <h:form id="frmPatientCU">
                     <p:dialog header="#{patientsController.accion} PACIENTE"
                               closable="true"
                               widgetVar="dlgPatientCU"
                               modal="true"
+                              showEffect="explode" hideEffect="explode"
                               id="idDlgPatientCU">
                         <p:panelGrid columns="2" id="pgPatientCU">
                             <p:outputLabel value="ID"/>
                             <p:inputText id="id" disabled="true" value="#{patientsController.paciente.id}"/>
                             <p:outputLabel value="Fecha"/>
-                            <p:da
+                            <p:calendar  id="txtDateInit" value="#{patientsController.paciente.dateInit}" navigator="true" locale="es" showOn="button"/>
+                            <p:outputLabel value="Nombres y Ape."/>
+                            <p:inputText id="txtNomApe" value="#{patientsController.paciente.nomApe}"/>
                         </p:panelGrid>
                     </p:dialog>
                 </h:form>
